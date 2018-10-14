@@ -1,0 +1,57 @@
+{% extends 'my_list.html' %}
+{% block greet %}
+        <li class="nav-item active">
+        <strong class="nav-link">{{user.name}}<span class="sr-only">(current)</span></strong>
+      </li>
+        <li class="nav-item active">
+        <strong class="nav-link">Your ToDo List<span class="sr-only">(current)</span></strong>
+      </li>
+{% endblock %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-warning alert-dismissable" role="alert">
+            <button class="close" data-dismiss="alert">
+                <small><sup>x</sup></small>
+            </button>
+            {{message}}
+        </div>
+    {% endfor %}
+{% endif %}
+<form class="form-inline my-2 my-lg-0" method="POST">{% csrf_token %}
+        <input class="form-control mr-sm-2" type="search" placeholder="Add Item" aria-label="Search" name="item">
+      <button type="submit" class="btn btn-primary">Add to List</button>
+      <button type="submit" class="btn btn-danger" name="logout" value="True">LogOut</button>
+</form>
+{% if all_items %}
+<table class="table table-dark">
+  <thead>
+    <tr>
+      <th scope="col"><strong>S.No</strong></th>
+      <th scope="col"><strong>Activity</strong></th>
+      <th scope="col"><strong><center>Completed</center> </strong></th>
+        <th scope="col"><strong><center>Edit</center></strong></th>
+      <th scope="col"><strong><center>Delete</center></strong></th>
+    </tr>
+  </thead>
+  <tbody>
+        {%for thing in all_items %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            {%if thing.completed%}
+            <td class="striker">{{thing.item}}</td>
+            <td><center><a href="{%url 'uncross' thing.id %}">Yes</a></center></td>
+            {% else %}
+            <td>{{thing.item}}</td>
+            <td><center><a href="{% url 'cross_off' thing.id %}">No</a></center></td>
+            {% endif %}
+            <td><center><a href="{% url 'edit' thing.id %}">Edit</a></center></td>
+            <td><center><a href="{% url 'delete' thing.id %}">Delete</a></center></td>
+        </tr>
+   {% endfor %}
+  </tbody>
+</table>
+{% else %}
+    <label>Your list is empty, please add activity to your list.</label>
+{% endif%}
+{% endblock %}

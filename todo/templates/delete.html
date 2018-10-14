@@ -1,0 +1,16 @@
+{% extends 'my_list.html' %}
+{% block greet %}
+       <li class="nav-item active">
+        <strong class="nav-link">Delete Your Activity<span class="sr-only">(current)</span></strong>
+      </li>
+{% endblock %}
+{% block content %}
+    {% if item %}
+    <form class="container" method="POST">{% csrf_token %}
+        <label><strong>Are Want To Delete Item</strong></label><br/>
+        <label>Item : {{item.item}}</label><br/>
+        <button type="submit" class="btn btn-dark" name="yes">Yes</button>
+        <button type="submit" class="btn btn-secondary" name="no">No</button>
+    </form>
+    {% endif %}
+{% endblock %}

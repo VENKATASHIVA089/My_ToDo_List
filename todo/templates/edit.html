@@ -1,0 +1,17 @@
+{% extends 'my_list.html' %}
+{% block greet %}
+       <li class="nav-item active">
+        <strong class="nav-link">Edit Your Activity<span class="sr-only">(current)</span></strong>
+      </li>
+{% endblock %}
+{% block content %}
+    {% if item %}
+<form method="POST">{% csrf_token %}
+  <div class="form-group">
+    <label>Activity</label>
+    <input type="text" class="form-control"  value="{{item.item}}" name='item' >
+  </div>
+  <button type="submit" class="btn btn-primary">Edit Your Activity</button>
+</form>
+    {% endif %}
+{% endblock %}

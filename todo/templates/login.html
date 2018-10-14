@@ -1,0 +1,31 @@
+{% extends 'my_list.html' %}
+{% block greet %}
+        <li class="nav-item active">
+        <strong class="nav-link">Login Here<span class="sr-only">(current)</span></strong>
+      </li>
+{% endblock %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-warning alert-dismissable" role="alert">
+            <button class="close" data-dismiss="alert">
+                <small><sup>x</sup></small>
+            </button>
+            {{message}}
+        </div>
+    {% endfor %}
+{% endif %}
+<form method="POST">{% csrf_token %}
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" name="email">
+    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+    <a href="{% url 'create' %}">New User</a>
+</form>
+{% endblock %}
